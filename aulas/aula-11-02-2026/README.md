@@ -38,6 +38,6 @@
 - Estrutura de Certificado X.509;
 - Revogação de Certificados - Lista de certificados revogados;
 - Desenvolvimento seguro;
-• Controle de acesso;
-• Auditoria e Mecanismos de auditoria;
-• Políticas de segurança.
+- Controle de acesso;
+- Auditoria e Mecanismos de auditoria;
+- Políticas de segurança.
