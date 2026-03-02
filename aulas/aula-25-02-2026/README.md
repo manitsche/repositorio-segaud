@@ -1,14 +1,14 @@
 # Apresentação - Segurança da informção - Aula 25/02/2026
 
-“O único sistema verdadeiramente seguro é aquele que está desligado, desplugado, trancado num cofre de titanium, lacrado, enterrado em um bunker de concreto, envolto por gás nervoso e vigiado por guardas armados muito bem pagos. Mesmo assim, eu não apostaria minha vida nisso.”
+> “O único sistema verdadeiramente seguro é aquele que está desligado, desplugado, trancado num cofre de titanium, lacrado, enterrado em um bunker de concreto, envolto por gás nervoso e vigiado por guardas armados muito bem pagos. Mesmo assim, eu não apostaria minha vida nisso.”
 
-> Gene Spafford - Diretor de Operações de Computador, Auditoria e Tecnologia da Segurança, Purdue University, França
+Gene Spafford - Diretor de Operações de Computador, Auditoria e Tecnologia da Segurança, Purdue University, França
 
 ---
 
 O que é segurança da informação?
 
-Segurança da informação é a proteção da informação contra vários tipos de ameaças, para garantir a continuidade do negócio, minimizar riscos, maximizar o retorno sobre os investimentos e as oportunidades. (ABNT NBR ISO/IEC27002:2005)
+> Segurança da informação é a proteção da informação contra vários tipos de ameaças, para garantir a continuidade do negócio, minimizar riscos, maximizar o retorno sobre os investimentos e as oportunidades. (ABNT NBR ISO/IEC27002:2005)
 
 ---
 
