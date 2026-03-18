@@ -1,130 +1,129 @@
-# 🔐 Criptografia Cascata com Tkinter
+# Criptografia Híbrida Dinâmica (CHD)
 
-Aplicação simples de criptografia feita em Python usando Tkinter.
+## Descrição
 
-Permite: - Criptografar texto - Descriptografar texto - Validar
-caracteres inválidos - Usar apenas letras (A‑Z, a‑z) e espaço
+Este projeto implementa um algoritmo de criptografia próprio, inspirado em métodos clássicos como:
 
-------------------------------------------------------------------------
+- Cifra de César  
+- Vigenère  
+- Rail Fence  
+- Transposição por blocos  
 
-# 📚 Ideia da criptografia
+A proposta é combinar diferentes técnicas para criar um sistema mais complexo e menos suscetível a ataques simples.
 
-O algoritmo NÃO usa tabela fixa de substituição.
+---
 
-Em vez disso, cada letra: - depende da posição no texto - depende de uma
-chave aleatória (seed) - depende da letra anterior já criptografada
+## Funcionamento
 
-Isso cria um **efeito cascata**.
+O algoritmo é composto pelas seguintes etapas:
 
-Se você mudar apenas 1 letra no início, todo o resto do texto muda.
+### 1. Conversão da chave
+A chave fornecida é transformada em uma sequência numérica com base na posição de cada caractere no alfabeto.
 
-------------------------------------------------------------------------
+---
 
-# 🔤 Alfabeto permitido
+### 2. Substituição (Vigenère Dinâmico)
+Cada caractere do texto é deslocado no alfabeto de acordo com:
+- o valor correspondente da chave  
+- a posição do caractere no texto  
 
-Apenas: A--Z, a--z e espaço
+Isso gera um deslocamento variável ao longo da mensagem.
 
-Se o usuário digitar números, símbolos ou acentos, o programa mostra
-erro.
+---
 
-------------------------------------------------------------------------
+### 3. Inversão por blocos
+O texto é dividido em blocos com tamanho igual ao comprimento da chave. Cada bloco é invertido.
 
-# 🧩 Explicação do código (parte por parte)
+---
 
-## Importações
+### 4. Transposição (Rail Fence)
+Os caracteres são reorganizados em um padrão de zigue-zague e depois recombinados, aumentando a dispersão.
 
-tkinter → cria a interface gráfica\
-messagebox → mostra alertas/erros\
-random → gera chave aleatória\
-string → fornece o alfabeto
+---
 
-------------------------------------------------------------------------
+### 5. Permutação baseada na chave
+Dentro de cada bloco, os caracteres são reorganizados com base na ordenação dos valores da chave.
 
-## Alfabeto
+---
 
-ALFABETO guarda todos os caracteres válidos.
+### 6. Padding
+Caso o tamanho do texto não seja múltiplo do tamanho da chave, são adicionados caracteres de preenchimento (`X`) ao final para manter a consistência dos blocos.
 
-Cada letra vira um índice numérico:
+---
 
-A = 0\
-B = 1\
-C = 2 ...
+## Decifragem
 
-Assim podemos fazer contas matemáticas com letras.
+O processo de decifragem aplica as etapas na ordem inversa:
 
-TAM guarda o tamanho do alfabeto.
+1. Desfaz a permutação  
+2. Desfaz a transposição (Rail Fence)  
+3. Desfaz a inversão dos blocos  
+4. Aplica o deslocamento inverso  
 
-------------------------------------------------------------------------
+A recuperação do texto original depende do uso da mesma chave.
 
-## Chaves secretas
+---
 
-seed e shift_inicial são números aleatórios.
+## Interface
 
-Eles mudam toda vez que o programa abre.
+O programa possui uma interface gráfica desenvolvida com Tkinter, contendo:
 
-Funcionam como a "senha" da criptografia.
+- Campo para entrada de texto  
+- Campo para chave  
+- Botão para cifrar  
+- Botão para decifrar  
+- Área de saída para o resultado  
 
-Sem eles o texto não pode ser recuperado.
+---
 
-------------------------------------------------------------------------
+## Exemplo de uso
 
-## Validação
-
-A função validar_texto verifica se o texto contém apenas caracteres
-permitidos.
-
-Se encontrar algo inválido: mostra messagebox.showerror e cancela a
-operação.
-
-------------------------------------------------------------------------
-
-## Função cifrar()
-
-Percorre cada letra do texto.
-
-Passos: 1. Converte a letra em índice 2. Aplica fórmula matemática 3.
-Gera novo índice 4. Converte de volta para letra
-
-Fórmula usada:
-
+### Texto
 ~~~
-novo = (idx + desloc + ultimo + seed \* (pos + 1)) % TAM
+The quick brown fox jumps over the lazy dog
 ~~~
 
-Isso mistura: - letra atual - letra anterior - posição - chave secreta
+### Chave
+~~~
+MarcoNitsche
+~~~
 
-Resultado: saída imprevisível.
+### Procedimento
 
-------------------------------------------------------------------------
+1. Inserir o texto e a chave  
+2. Executar a cifragem  
+3. Copiar o resultado  
+4. Inserir o resultado e executar a decifragem  
 
-## Função decifrar()
+### Resultado esperado
+The quick brown fox jumps over the lazy dog
 
-Faz o processo inverso.
 
-Subtrai os mesmos valores usados na cifra.
+---
 
-Assim recupera exatamente o texto original.
+## Regras importantes
 
-------------------------------------------------------------------------
+- A mesma chave deve ser utilizada para cifrar e decifrar  
+- Qualquer alteração no texto cifrado impede a recuperação correta  
+- O algoritmo diferencia letras maiúsculas e minúsculas  
+- Espaços são suportados  
 
-# 🖥 Interface gráfica
+---
 
-Feita com Tkinter usando grid().
+## Objetivo
 
-Componentes:
+O projeto tem como objetivo demonstrar:
 
--   Campo de entrada de texto
--   Botão Criptografar
--   Botão Descriptografar
--   Campo somente leitura para texto criptografado
--   Campo somente leitura para texto descriptografado
+- conceitos de criptografia clássica  
+- combinação de técnicas de substituição e transposição  
+- construção de um algoritmo reversível  
+- tratamento de blocos com padding  
 
-------------------------------------------------------------------------
+---
 
-# 🔁 Como usar
+## Possíveis melhorias
 
-Criptografar: Digite o texto → clique Criptografar → copie o resultado
-
-Descriptografar: Cole o texto criptografado → clique Descriptografar
-
-------------------------------------------------------------------------
+- Suporte a caracteres especiais  
+- Aplicação de múltiplas rodadas de criptografia  
+- Implementação de análise de frequência  
+- Exportação e importação de arquivos  
