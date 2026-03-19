@@ -1,129 +1,142 @@
-# Criptografia Híbrida Dinâmica (CHD)
+# Minha Criptografia
 
 ## Descrição
 
-Este projeto implementa um algoritmo de criptografia próprio, inspirado em métodos clássicos como:
+Este projeto implementa um sistema simples de criptografia e descriptografia baseado em deslocamentos dinâmicos. O algoritmo transforma um texto composto apenas por letras (A-Z, a-z) e espaços em uma versão criptografada, que pode ser revertida ao texto original.
 
-- Cifra de César  
-- Vigenère  
-- Rail Fence  
-- Transposição por blocos  
-
-A proposta é combinar diferentes técnicas para criar um sistema mais complexo e menos suscetível a ataques simples.
+A lógica utiliza valores aleatórios gerados no início da execução, tornando a criptografia diferente a cada vez que o programa é executado.
 
 ---
 
-## Funcionamento
+## Como funciona
 
-O algoritmo é composto pelas seguintes etapas:
+### Alfabeto
 
-### 1. Conversão da chave
-A chave fornecida é transformada em uma sequência numérica com base na posição de cada caractere no alfabeto.
+O sistema trabalha com um conjunto fixo de caracteres:
 
----
+- Letras maiúsculas (A-Z)
+- Letras minúsculas (a-z)
+- Espaço
 
-### 2. Substituição (Vigenère Dinâmico)
-Cada caractere do texto é deslocado no alfabeto de acordo com:
-- o valor correspondente da chave  
-- a posição do caractere no texto  
-
-Isso gera um deslocamento variável ao longo da mensagem.
+Cada caractere é tratado como um índice dentro desse alfabeto.
 
 ---
 
-### 3. Inversão por blocos
-O texto é dividido em blocos com tamanho igual ao comprimento da chave. Cada bloco é invertido.
+### Parâmetros principais
+
+- `seed`: número aleatório entre 5 e 50 que influencia o deslocamento progressivo
+- `shift_inicial`: deslocamento inicial aleatório baseado no tamanho do alfabeto
+
+Esses valores são essenciais para o funcionamento correto da criptografia e descriptografia.
 
 ---
 
-### 4. Transposição (Rail Fence)
-Os caracteres são reorganizados em um padrão de zigue-zague e depois recombinados, aumentando a dispersão.
+### Validação
+
+Antes de processar o texto, o sistema verifica se todos os caracteres pertencem ao alfabeto permitido. Caso contrário, a operação é interrompida.
 
 ---
 
-### 5. Permutação baseada na chave
-Dentro de cada bloco, os caracteres são reorganizados com base na ordenação dos valores da chave.
+## Criptografia
 
----
+A função `cifrar` transforma o texto original em texto criptografado.
 
-### 6. Padding
-Caso o tamanho do texto não seja múltiplo do tamanho da chave, são adicionados caracteres de preenchimento (`X`) ao final para manter a consistência dos blocos.
+### Processo
 
----
+Para cada caractere:
 
-## Decifragem
-
-O processo de decifragem aplica as etapas na ordem inversa:
-
-1. Desfaz a permutação  
-2. Desfaz a transposição (Rail Fence)  
-3. Desfaz a inversão dos blocos  
-4. Aplica o deslocamento inverso  
-
-A recuperação do texto original depende do uso da mesma chave.
-
----
-
-## Interface
-
-O programa possui uma interface gráfica desenvolvida com Tkinter, contendo:
-
-- Campo para entrada de texto  
-- Campo para chave  
-- Botão para cifrar  
-- Botão para decifrar  
-- Área de saída para o resultado  
-
----
-
-## Exemplo de uso
-
-### Texto
+1. Obtém o índice do caractere no alfabeto
+2. Aplica a fórmula:
 ~~~
-The quick brown fox jumps over the lazy dog
+novo = (idx + desloc + ultimo + seed * (pos + 1)) % TAM
 ~~~
 
-### Chave
+Onde:
+- `idx`: índice do caractere atual
+- `desloc`: valor de deslocamento atual
+- `ultimo`: índice do último caractere criptografado
+- `pos`: posição do caractere no texto
+- `seed`: valor aleatório definido no início
+- `TAM`: tamanho do alfabeto
+
+3. Atualiza os valores:
 ~~~
-MarcoNitsche
+ultimo = novo
+desloc = novo
 ~~~
 
-### Procedimento
+4. Converte o novo índice de volta para caractere
 
-1. Inserir o texto e a chave  
-2. Executar a cifragem  
-3. Copiar o resultado  
-4. Inserir o resultado e executar a decifragem  
+### Observação
 
-### Resultado esperado
-The quick brown fox jumps over the lazy dog
-
+Cada caractere depende do anterior, criando um efeito acumulativo.
 
 ---
 
-## Regras importantes
+## Descriptografia
 
-- A mesma chave deve ser utilizada para cifrar e decifrar  
-- Qualquer alteração no texto cifrado impede a recuperação correta  
-- O algoritmo diferencia letras maiúsculas e minúsculas  
-- Espaços são suportados  
+A função `decifrar` reverte o texto criptografado ao original.
+
+### Processo
+
+Para cada caractere:
+
+1. Obtém o índice do caractere criptografado
+2. Aplica a fórmula inversa:
+
+~~~
+original = (idx - desloc - ultimo - seed * (pos + 1)) % TAM
+~~~
+
+3. Atualiza os valores:
+~~~
+ultimo = idx
+desloc = idx
+~~~
+
+
+4. Converte o índice obtido para o caractere original
 
 ---
 
-## Objetivo
+## Características
 
-O projeto tem como objetivo demonstrar:
-
-- conceitos de criptografia clássica  
-- combinação de técnicas de substituição e transposição  
-- construção de um algoritmo reversível  
-- tratamento de blocos com padding  
+- Cada execução gera uma criptografia diferente
+- O algoritmo possui dependência entre caracteres (efeito cascata)
+- Textos iguais podem gerar saídas diferentes dependendo da posição
 
 ---
 
-## Possíveis melhorias
+## Limitações
 
-- Suporte a caracteres especiais  
-- Aplicação de múltiplas rodadas de criptografia  
-- Implementação de análise de frequência  
-- Exportação e importação de arquivos  
+- Não suporta números, acentos ou símbolos
+- Não é adequado para segurança real
+- A descriptografia depende dos mesmos valores de `seed` e `shift_inicial`
+- Esses valores não são salvos automaticamente
+
+---
+
+## Exemplo conceitual
+
+Entrada:
+
+~~~
+OLA
+~~~
+
+Cada caractere é transformado considerando:
+- sua posição
+- o caractere anterior
+- os valores aleatórios
+
+O resultado final parece aleatório, mas pode ser revertido com os mesmos parâmetros.
+
+---
+
+## Conclusão
+
+O algoritmo é uma variação de cifra de substituição com deslocamento dinâmico e estado interno. Ele combina:
+
+- deslocamento progressivo
+- dependência entre caracteres
+- fator aleatório
