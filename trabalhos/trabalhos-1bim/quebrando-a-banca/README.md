@@ -27,7 +27,7 @@ uvicorn servidorJogo:app --reload
 python QuebrandoBanca.py
 ```
 
-## Como desbrir a forma para quebrar a banca?
+## Como descobrir a forma para quebrar a banca?
 
 Em termos técnicos, o uso de timestamp como semente reduz drasticamente a entropia do sistema, tornando o espaço de busca pequeno e previsível. Como o gerador é determinístico, basta testar valores próximos ao tempo conhecido para reproduzir toda a sequência pseudoaleatória.
 
