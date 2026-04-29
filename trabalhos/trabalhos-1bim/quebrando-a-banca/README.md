@@ -31,7 +31,7 @@ python QuebrandoBanca.py
 
 Em termos técnicos, o uso de timestamp como semente reduz drasticamente a entropia do sistema, tornando o espaço de busca pequeno e previsível. Como o gerador é determinístico, basta testar valores próximos ao tempo conhecido para reproduzir toda a sequência pseudoaleatória.
 
-A semente sempre vai ser a quantidade exata de segundos que se passaram desde 01/01/1970 até o momento que roda o código QuebraBanca.py
+A semente sempre vai ser a quantidade exata de segundos que se passaram desde 01/01/1970 até o momento em que a requisição para iniciar o jogo é processada no servidor.
 
 Vai contra o principio da **Entropia**, que  mede a aleatoriedade e imprevisibilidade dos dados.
 
