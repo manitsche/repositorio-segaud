@@ -75,7 +75,7 @@ Principais informações:
 
 CRL significa Certificate Revocation List.
 
-É uma lista de certificados que foram revogados.
+É uma lista de certificados que foram revogados, que deve ser mostrada como um certificado for revogado.
 
 ## Resumo
 
